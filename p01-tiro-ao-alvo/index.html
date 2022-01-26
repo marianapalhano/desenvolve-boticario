@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo - Tiro ao Alvo</title>
+</head>
+<body>
+    <canvas width="600" height="400"></canvas>
+    <script>
+        let canvas = document.querySelector('canvas');
+        let brush = canvas.getContext('2d');
+        let radius = 10;
+        let randomX;
+        let randomY;
+
+        brush.fillStyle = 'lightgray';
+        brush.fillRect(0, 0, 600, 400);
+
+        function drawCircle(x, y, radius, color) {
+            brush.fillStyle = color;
+            brush.beginPath();
+            brush.arc(x, y, radius, 0, 2 * Math.PI);
+            brush.fill();
+        }
+
+        function clearCanvas() {
+            brush.clearRect(0, 0, 600, 400);
+        }
+
+        function drawTarget(x, y) {       
+            drawCircle(x, y, radius + 20, 'red');
+            drawCircle(x, y, radius + 10, 'white');
+            drawCircle(x, y, radius, 'red'); 
+        }
+
+        function setRandomPosition(max) {
+            return Math.floor(Math.random() * max);
+        }
+
+        function updateCanvas() {
+            clearCanvas();
+            randomX = setRandomPosition(600);
+            randomY = setRandomPosition(400);
+
+            drawTarget(randomX, randomY);
+        }
+
+        setInterval(updateCanvas, 1000);
+
+        function shoots(event) {
+            let x = event.pageX - canvas.offsetLeft;
+            let y = event.pageY - canvas.offsetTop;
+
+            if ((x > randomX - radius) && (x < randomX + radius) && (y > randomY - radius) && (y < randomY + radius)) {
+                alert('Got it!');
+            }
+        }
+
+        canvas.onclick = shoots;
+
+    </script>
+</body>
+</html>
