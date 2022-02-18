@@ -17,7 +17,7 @@ main {
 }
 
 .principal {	
-	padding: 30px;
+	padding: 40px 30px;
 	width: 940px;
 	margin: 0 auto;
 }
@@ -31,6 +31,7 @@ main {
 
 .principal p {
 	margin: 0 0 1em;
+	line-height: 1.5em;
 }
 
 .principal strong {
@@ -56,16 +57,16 @@ main {
 	margin: 1em auto;
 }
 
-#missao {
-	font-size: 20px
-}
-
 em strong {
 	color: #621B00;
 }
 
 .itens {
 	line-height: 1.5;
+}
+
+.itens:before {
+	content: "✂ ";
 }
 
 .itens:first-child {
@@ -97,8 +98,12 @@ em strong {
 	width: 60%;
 }
 
+.horario {
+	margin: 40px auto;
+}
+
 table {
-	margin: 20px 0 40px;
+	margin: 0 auto;
 	border-spacing: 0;
 	border-collapse: collapse;
 }
@@ -111,7 +116,7 @@ thead {
 
 td, th {
 	border: 1px solid #333;
-	padding: 8px;
+	padding: 8px 16px;
 }
 
 header {
@@ -239,4 +244,22 @@ form input[type=submit]:hover {
 
 form input[type=checkbox] {
 	margin: 16px 0;
+}
+
+@media screen and (max-width: 480px) {
+	.wrapper, .principal, .conteudo-beneficios, .mapa-conteudo, .video {
+		width: auto;
+	}
+
+	h1 {
+		text-align: center;
+	}
+
+	nav {
+		position: static;
+	}
+
+	.lista-beneficios, .imagem-beneficios {
+		width: 100%;
+	}
 }
