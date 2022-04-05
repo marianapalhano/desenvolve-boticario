@@ -63,6 +63,33 @@ class Atendimento {
             }
         });
     }
+
+    edit(id, values, res) {
+        if(values.data) {
+            values.data = moment(values.data, 'DD/MM/YYYY').format('YYYY-MM-DD hh:mm:ss');
+        }
+        const sql = 'UPDATE Atendimentos SET ? WHERE id = ?';
+
+        conexao.query(sql, [values, id], (err, result) => {
+            if (err) {
+                res.status(400).json(err);
+            } else {
+                res.status(200).json({ ...values, id });
+            }
+        });
+    }
+
+    delete(id, res) {
+        const sql = 'DELETE FROM Atendimentos WHERE id = ?';
+
+        conexao.query(sql, id, (err, result) => {
+            if(err) {
+                res.status(400).json(err);
+            } else {
+                res.status(200).json({ id });
+            }
+        })
+    }
 }
 
 module.exports = new Atendimento;
