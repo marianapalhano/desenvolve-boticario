@@ -10,9 +10,13 @@
   "author": "Mariana Palhano",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.26.1",
     "body-parser": "^1.19.2",
     "consign": "^0.1.6",
     "express": "^4.17.3",
     "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^6.1.2"
   }
 }

@@ -1,5 +1,7 @@
 const moment = require('moment');
+const axios = require('axios');
 const conexao = require('../db/conexao');
+const repo = require('../repositories/atendimento');
 
 class Atendimento {
     add(atendimento, res) {
@@ -24,18 +26,14 @@ class Atendimento {
         const erros = validacoes.filter(campo => !campo.valido);
         const existemErros = erros.length;
         if (existemErros) {
-            res.status(400).json(erros);
+            return new Promise((resolve, reject) => reject(erros));
         } else {
             const atendimentoDatado = { ...atendimento, dataCriacao, data };
-            const sql = 'INSERT INTO atendimentos SET ?';
-    
-            conexao.query(sql, atendimentoDatado, (err, res) => {
-                if (err) {
-                    res.status(400).json(err);
-                } else {
-                    res.status(201).json(atendimento);
-                }
-            });
+            return repo.add(atendimentoDatado)
+                .then(result => {
+                    const id = result.insertId
+                    return { ...atendimento, id };
+                });
         }
     }
 
@@ -54,11 +52,14 @@ class Atendimento {
     getById(id, res) {
         const sql = `SELECT * FROM Atendimentos WHERE id =${id}`;
 
-        conexao.query(sql, (err, result) => {
+        conexao.query(sql, async (err, result) => {
             const atendimento = result[0];
+            const cpf = atendimento.cliente;
             if(err) {
                 res.status(400).json(err);
             } else {
+                const { data } = await axios.get(`http://localhost:8082/${cpf}`);
+                atendimento.cliente = data;
                 res.status(200).json(atendimento);
             }
         });
