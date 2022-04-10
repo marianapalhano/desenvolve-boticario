@@ -1,7 +1,7 @@
-const repo = require('../repositories/suppliers');
+const repo = require('../repositories/products');
 const moment = require('moment');
 
-class Supplier {
+class Product {
 
     list() {
         return repo.list();
@@ -11,13 +11,13 @@ class Supplier {
         return repo.getById(id);
     }
 
-    add(supplier) {
+    add(product) {
         const created_at = moment().format('YYYY-MM-DD hh:mm:ss');
         const updated_at = created_at;
-            return repo.add({ ...supplier, created_at, updated_at })
+            return repo.add({ ...product, created_at, updated_at })
                 .then(result => {
                     const id = result.insertId
-                    return { ...supplier, id };
+                    return { ...product, id };
                 });
     }
 
@@ -31,4 +31,4 @@ class Supplier {
     }
 }
 
-module.exports = new Supplier;
+module.exports = new Product;

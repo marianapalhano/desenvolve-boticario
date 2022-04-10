@@ -3,6 +3,7 @@ class Tables {
         this.db = db;
         console.log('Tabelas chamadas');
         this.createSuppliers();
+        this.createProducts();
     }
 
     createSuppliers() {
@@ -12,6 +13,17 @@ class Tables {
                 console.log(err);
             } else {
                 console.log('Suppliers table successfully created');
+            }
+        });
+    }
+
+    createProducts() {
+        const sql = 'CREATE TABLE IF NOT EXISTS products (id int NOT NULL AUTO_INCREMENT, name varchar(30) NOT NULL, price double NOT NULL, stack int, supplier_id int NOT NULL, FOREIGN KEY(supplier_id) REFERENCES suppliers(id), PRIMARY KEY(id))';
+        this.db.query(sql, err => {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log('Products table successfully created');
             }
         });
     }

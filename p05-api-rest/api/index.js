@@ -1,5 +1,6 @@
 const express = require('express');
-const router = require('./routes/suppliers');
+const suppliersRouter = require('./routes/suppliers');
+const productsRouter = require('./routes/products');
 const db = require('./db/connection');
 const tables = require('./db/tables');
 
@@ -7,7 +8,8 @@ const app = express();
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
-app.use('/api/suppliers', router);
+app.use('/api/suppliers', suppliersRouter);
+app.use('/api/products', productsRouter);
 
 db.connect((err) => {
     if (err) {
