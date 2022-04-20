@@ -51,6 +51,59 @@ class PersonController {
             return res.status(500).json(error.message);
         }
     }
+
+    static async getEnrollmentById(req, res) {
+        const { studentId, enrollmentId } = req.params;
+        try {
+            const enrollment = await db.enrollments.findOne({ 
+                where: {
+                    id: Number(enrollmentId),
+                    student_id: Number(studentId)
+                } 
+            });
+            return res.status(200).json(enrollment);
+        } catch (error) {
+            return res.status(500).json(error.message);
+        }
+    }
+
+    static async createEnrollment(req, res) {
+        const { studentId } = req.params;
+        const newEnrollment = { ...req.body, student_id: Number(studentId) };
+        try {
+            const enrollment = await db.enrollments.create(newEnrollment);
+            return res.status(200).json(enrollment);
+        } catch (error) {
+            return res.status(500).json(error.message);
+        }
+    }
+
+    static async updateEnrollment(req, res) {
+        const { studentId, enrollmentId } = req.params;
+        const newValues = req.body;
+        try {
+            await db.enrollments.update(newValues, { 
+                where: { 
+                    id: Number(enrollmentId),
+                    student_id: Number(studentId)
+                } 
+            });
+            const enrollment = await db.enrollments.findOne({ where: { id: Number(enrollmentId) } });
+            return res.status(200).json(enrollment);
+        } catch (error) {
+            return res.status(500).json(error.message);
+        }
+    }
+
+    static async deleteEnrollment(req, res) {
+        const { studentId, enrollmentId } = req.params;
+        try {
+            await db.enrollments.destroy({ where: { id: Number(enrollmentId) } });
+            return res.status(200).json({ message: `Registro com id ${enrollmentId} apagado` });
+        } catch (error) {
+            return res.status(500).json(error.message);
+        }
+    }
 }
 
 module.exports = PersonController;

@@ -9,4 +9,9 @@ router.post('/pessoas', PersonController.create);
 router.put('/pessoas/:id', PersonController.update);
 router.delete('/pessoas/:id', PersonController.delete);
 
+router.get('/pessoas/:studentId/matricula/:enrollmentId', PersonController.getEnrollmentById);
+router.post('/pessoas/:studentId/matricula', PersonController.createEnrollment);
+router.put('/pessoas/:studentId/matricula/:enrollmentId', PersonController.updateEnrollment);
+router.delete('/pessoas/:studentId/matricula/:enrollmentId', PersonController.deleteEnrollment);
+
 module.exports = router;
