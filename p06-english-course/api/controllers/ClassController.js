@@ -1,9 +1,16 @@
 const db = require('../models');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 class ClassController {
     static async getAll(req, res) {
+        const { started_at, final_date } = req.query;
+        const where = {};
+        started_at || final_date ? where.started_at = {} : null;
+        started_at ? where.started_at[Op.gte] = started_at : null;
+        final_date ? where.started_at[Op.lte] = final_date : null;
         try {
-            const allClasses = await db.classes.findAll();
+            const allClasses = await db.classes.findAll({ where });
             return res.status(200).json(allClasses);
         } catch (error) {
             return res.status(500).json(error.message);
