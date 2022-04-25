@@ -10,6 +10,7 @@ router.put('/pessoas/:id', PersonController.update);
 router.delete('/pessoas/:id', PersonController.delete);
 
 router.get('/pessoas/:studentId/matricula/:enrollmentId', PersonController.getEnrollmentById);
+router.get('/pessoas/matricula/:classId/confirmadas', PersonController.getEnrollmentByClass);
 router.post('/pessoas/:studentId/matricula', PersonController.createEnrollment);
 router.put('/pessoas/:studentId/matricula/:enrollmentId', PersonController.updateEnrollment);
 router.delete('/pessoas/:studentId/matricula/:enrollmentId', PersonController.deleteEnrollment);

@@ -67,6 +67,23 @@ class PersonController {
         }
     }
 
+    static async getEnrollmentByClass(req, res) {
+        const { classId } = req.params;
+        try {
+            const enrollments = await db.enrollments.findAndCountAll({ 
+                where: {
+                    class_id: Number(classId),
+                    status: 'confirmado'
+                },
+                limit: 20,
+                order: [['student_id', 'DESC']]
+            });
+            return res.status(200).json(enrollments);
+        } catch (error) {
+            return res.status(500).json(error.message);
+        }
+    }
+
     static async createEnrollment(req, res) {
         const { studentId } = req.params;
         const newEnrollment = { ...req.body, student_id: Number(studentId) };
