@@ -121,6 +121,17 @@ class PersonController {
             return res.status(500).json(error.message);
         }
     }
+
+    static async cancelPerson(req, res) {
+        const { studentId } = req.params;
+        try {
+            await db.People.update({ active: false }, { where: { id: Number(studentId) } });
+            await db.enrollments.update({ status: 'cancelado' }, { where: { student_id: Number(studentId) } });
+            return res.status(200).json({ message: `Matriculas relativas ao estudante id ${studentId} canceladas` });
+        } catch (error) {
+            return res.status(500).json(error.message);
+        }
+    }
 }
 
 module.exports = PersonController;
