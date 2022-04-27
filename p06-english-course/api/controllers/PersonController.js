@@ -15,7 +15,7 @@ class PersonController {
     static async getById(req, res) {
         const { id } = req.params;
         try {
-            const person = await db.People.findOne({ where: { id: Number(id) } });
+            const person = await PeopleServices.getById(id);
             return res.status(200).json(person);
         } catch (error) {
             return res.status(500).json(error.message);
