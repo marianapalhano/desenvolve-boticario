@@ -1,9 +1,11 @@
 const db = require('../models');
+const Services = require('../services/Services');
+const LevelServices = new Services('levels');
 
 class LevelController {
     static async getAll(req, res) {
         try {
-            const allLevels = await db.levels.findAll();
+            const allLevels = await LevelServices.findAll();
             return res.status(200).json(allLevels);
         } catch (error) {
             return res.status(500).json(error.message);
