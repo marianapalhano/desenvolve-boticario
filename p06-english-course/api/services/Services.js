@@ -5,12 +5,12 @@ class Services {
         this.modelName = modelName;
     }
 
-    async getAll() {
-        return db[this.modelName].findAll();
+    async getAll(where = {}) {
+        return db[this.modelName].findAll({ where: { ...where } });
     }
 
-    async getById() {
-        return db[this.modelName].findOne({ where: { id: Number(id) } });
+    async getById(where = {}) {
+        return db[this.modelName].findOne({ where: { ...where } });
     }
 
     async update(newValues, id, transaction) {
@@ -19,6 +19,10 @@ class Services {
 
     async update(newValues, where, id, transaction) {
         return db[this.modelName].update(newValues, { where: { ...where }}, transaction);
+    }
+
+    async create(data) {
+        return db[this.modelName].create(data);
     }
 }
 

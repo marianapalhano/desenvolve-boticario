@@ -9,8 +9,9 @@ class PeopleServices extends Services {
 
     async cancelPersonAndEnrollments(studentId) {
         return db.sequelize.transaction(async trans => {
-            
-        })
+            await super.update({ active: false }, studentId, { transaction: trans });
+            await this.enrollments.update({ status: 'cancelado' }, { student_id: studentId }, { transaction: trans });
+        });
     }
 }
 

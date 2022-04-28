@@ -1,6 +1,8 @@
 const db = require('../models');
 const Sequelize = require('sequelize');
+const { ClassesServices } = require('../services');
 const Op = Sequelize.Op;
+const classesService = new ClassesServices();
 
 class ClassController {
     static async getAll(req, res) {
@@ -10,7 +12,7 @@ class ClassController {
         started_at ? where.started_at[Op.gte] = started_at : null;
         final_date ? where.started_at[Op.lte] = final_date : null;
         try {
-            const allClasses = await db.classes.findAll({ where });
+            const allClasses = await classesService.getAll(where);
             return res.status(200).json(allClasses);
         } catch (error) {
             return res.status(500).json(error.message);
